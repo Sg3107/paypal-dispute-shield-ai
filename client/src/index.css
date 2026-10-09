@@ -106,16 +106,20 @@ body {
 .ag-theme-quartz-dark .ag-cell {
   display: flex !important;
   align-items: center !important;
-  padding: 0 16px !important;
+  padding: 0 12px !important;
   line-height: normal !important;
   overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .ag-theme-quartz-dark .ag-cell-value {
   display: flex !important;
   align-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
   height: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 /* Avatars */

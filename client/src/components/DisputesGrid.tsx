@@ -153,8 +153,8 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     {
       headerName: "Customer & Case ID",
       field: "buyer_name",
-      minWidth: 310,
-      flex: 1.6,
+      minWidth: 260,
+      flex: 1.3,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const initials = getInitials(params.data.buyer_name);
@@ -162,22 +162,25 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
         const isCopied = copiedId === params.data.paypal_dispute_id;
 
         return (
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", width: "100%", height: "100%", overflow: "hidden" }}>
-            <div className="avatar-circle" style={{ background: gradient, width: "36px", height: "36px", flexShrink: 0 }}>
+          <div 
+            title={params.data.item_title ? `${params.data.buyer_name} • ${params.data.item_title}` : params.data.buyer_name}
+            style={{ display: "flex", alignItems: "center", gap: "10px", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}
+          >
+            <div className="avatar-circle" style={{ background: gradient, width: "34px", height: "34px", flexShrink: 0 }}>
               {initials}
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0, flex: 1, gap: "3px", overflow: "hidden" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", overflow: "hidden" }}>
-                <span style={{ fontWeight: "700", color: "#f8fafc", fontSize: "13.5px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0, flex: 1, gap: "2px", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", overflow: "hidden" }}>
+                <span style={{ fontWeight: "700", color: "#f8fafc", fontSize: "13px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {params.data.buyer_name}
                 </span>
                 <span style={{ 
-                  fontSize: "10.5px", 
+                  fontSize: "10px", 
                   color: "#94a3b8", 
                   fontFamily: "'JetBrains Mono', monospace", 
                   background: "rgba(30, 41, 59, 0.7)", 
-                  padding: "1px 6px", 
+                  padding: "1px 5px", 
                   borderRadius: "4px", 
                   border: "1px solid rgba(255, 255, 255, 0.08)",
                   flexShrink: 0,
@@ -187,7 +190,7 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
                 </span>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "6px", overflow: "hidden", whiteSpace: "nowrap" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "5px", overflow: "hidden", whiteSpace: "nowrap" }}>
                 <span style={{ fontSize: "11px", color: "#38bdf8", fontFamily: "'JetBrains Mono', monospace", fontWeight: "600", flexShrink: 0 }}>
                   {params.data.paypal_dispute_id}
                 </span>
@@ -207,11 +210,6 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
                 >
                   {isCopied ? <Check size={11} /> : <Copy size={11} />}
                 </button>
-                {params.data.item_title && (
-                  <span style={{ fontSize: "11px", color: "#64748b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
-                    • {params.data.item_title}
-                  </span>
-                )}
               </div>
             </div>
           </div>
@@ -229,23 +227,34 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
         const isAuth = params.data.reason_code === "UNAUTHORISED";
 
         return (
-          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
             <span 
               className="badge badge-neutral" 
+              title={params.data.reason}
               style={{ 
-                fontSize: "12px", 
+                fontSize: "11.5px", 
+                padding: "3px 8px",
                 background: "rgba(30, 41, 59, 0.7)", 
-                border: "1px solid #334155" 
+                border: "1px solid #334155",
+                maxWidth: "100%",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px"
               }}
             >
               {isINR ? (
-                <Package size={13} color="#f59e0b" />
+                <Package size={12} color="#f59e0b" style={{ flexShrink: 0 }} />
               ) : isAuth ? (
-                <Lock size={13} color="#a855f7" />
+                <Lock size={12} color="#a855f7" style={{ flexShrink: 0 }} />
               ) : (
-                <AlertTriangle size={13} color="#38bdf8" />
+                <AlertTriangle size={12} color="#38bdf8" style={{ flexShrink: 0 }} />
               )}
-              <span>{params.data.reason}</span>
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {params.data.reason}
+              </span>
             </span>
           </div>
         );
@@ -254,12 +263,12 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     {
       headerName: "Escrow Held",
       field: "dispute_amount",
-      width: 140,
+      width: 130,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         return (
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", gap: "2px" }}>
-            <span style={{ fontWeight: "800", color: "#f8fafc", fontSize: "14.5px", letterSpacing: "-0.02em" }}>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", width: "100%", maxWidth: "100%", gap: "2px", overflow: "hidden" }}>
+            <span style={{ fontWeight: "800", color: "#f8fafc", fontSize: "14px", letterSpacing: "-0.02em" }}>
               ₹{params.data.dispute_amount.toLocaleString("en-IN")}
             </span>
             <span style={{ fontSize: "10px", color: "#f59e0b", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.03em" }}>
@@ -270,9 +279,9 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
       },
     },
     {
-      headerName: "Response Deadline",
+      headerName: "Deadline",
       field: "respond_by",
-      width: 165,
+      width: 140,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const diffMs = new Date(params.data.respond_by).getTime() - Date.now();
@@ -280,31 +289,32 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
         const isUrgent = daysLeft <= 3 && params.data.status === "ACTION_REQUIRED";
 
         return (
-          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
             <div style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "6px",
-              padding: "4px 10px",
-              borderRadius: "8px",
+              gap: "5px",
+              padding: "3px 8px",
+              borderRadius: "6px",
               background: isUrgent ? "rgba(244, 63, 94, 0.15)" : "rgba(30, 41, 59, 0.6)",
               border: isUrgent ? "1px solid rgba(244, 63, 94, 0.4)" : "1px solid rgba(255, 255, 255, 0.08)",
               color: isUrgent ? "#fb7185" : "#cbd5e1",
-              fontSize: "12px",
-              fontWeight: "600"
+              fontSize: "11.5px",
+              fontWeight: "600",
+              whiteSpace: "nowrap",
+              overflow: "hidden"
             }}>
-              <Clock size={13} className={isUrgent ? "pulse-indicator" : ""} />
-              <span>{daysLeft > 0 ? `${daysLeft} days left` : "Expired"}</span>
-              {isUrgent && <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f43f5e" }}></span>}
+              <Clock size={12} className={isUrgent ? "pulse-indicator" : ""} style={{ flexShrink: 0 }} />
+              <span>{daysLeft > 0 ? `${daysLeft}d left` : "Expired"}</span>
             </div>
           </div>
         );
       },
     },
     {
-      headerName: "AI Win Probability",
+      headerName: "AI Win Prob",
       field: "win_probability",
-      width: 175,
+      width: 145,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const pct = Math.round((params.data.win_probability || 0) * 100);
@@ -316,16 +326,17 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
         return (
           <div 
             title={breakdown}
-            style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", gap: "4px", width: "100%", cursor: "help" }}
+            style={{ display: "flex", flexDirection: "column", justifyContent: "center", height: "100%", width: "100%", maxWidth: "120px", gap: "3px", overflow: "hidden", cursor: "help" }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "12px", fontWeight: "700" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "11.5px", fontWeight: "700" }}>
               <span style={{ color }}>{pct}%</span>
-              <span style={{ fontSize: "10px", color: "#64748b", textTransform: "uppercase" }}>Deterministic</span>
+              <span style={{ fontSize: "9.5px", color: "#64748b", textTransform: "uppercase" }}>Rule Score</span>
             </div>
-            <div className="progress-track" style={{ height: "6px", background: "#1a2438" }}>
+            <div style={{ width: "100%", maxWidth: "100%", height: "5px", background: "#1a2438", borderRadius: "9999px", overflow: "hidden" }}>
               <div
-                className="progress-fill"
                 style={{ 
+                  height: "100%",
+                  borderRadius: "9999px",
                   width: `${pct}%`, 
                   background: pct >= 75 ? "linear-gradient(90deg, #10b981, #34d399)" : pct >= 45 ? "linear-gradient(90deg, #f59e0b, #fbbf24)" : "#ef4444" 
                 }}
@@ -338,18 +349,20 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     {
       headerName: "EV Financial Rec.",
       field: "decision",
-      width: 185,
+      width: 165,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const isFight = params.data.decision === "FIGHT";
         return (
-          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
             <span 
               className={`badge ${isFight ? "badge-fight" : "badge-settle"}`} 
-              style={{ fontSize: "12px", padding: "5px 10px" }}
+              style={{ fontSize: "11px", padding: "4px 8px", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
             >
-              <Scale size={13} />
-              <span>{isFight ? `FIGHT (+₹${params.data.ev_fight})` : `SETTLE (-₹${Math.abs(params.data.ev_settle)})`}</span>
+              <Scale size={12} style={{ flexShrink: 0 }} />
+              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {isFight ? `FIGHT (+₹${params.data.ev_fight})` : `SETTLE`}
+              </span>
             </span>
           </div>
         );
@@ -358,39 +371,39 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     {
       headerName: "Status",
       field: "status",
-      width: 160,
+      width: 145,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         if (params.data.status === "RESOLVED_MERCHANT_WON") {
           return (
-            <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-              <span className="badge badge-won" style={{ fontSize: "11.5px" }}>
-                <CheckCircle2 size={13} /> WON (Released)
+            <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
+              <span className="badge badge-won" style={{ fontSize: "11px", padding: "3px 8px", whiteSpace: "nowrap" }}>
+                <CheckCircle2 size={12} style={{ flexShrink: 0 }} /> WON
               </span>
             </div>
           );
         }
         if (params.data.status === "UNDER_REVIEW") {
           return (
-            <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-              <span className="badge badge-settle" style={{ fontSize: "11.5px" }}>
-                <Clock size={13} /> PayPal Review
+            <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
+              <span className="badge badge-settle" style={{ fontSize: "11px", padding: "3px 8px", whiteSpace: "nowrap" }}>
+                <Clock size={12} style={{ flexShrink: 0 }} /> Review
               </span>
             </div>
           );
         }
         if (params.data.status === "SETTLED") {
           return (
-            <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-              <span className="badge badge-neutral" style={{ fontSize: "11.5px" }}>
-                Refund Settled
+            <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
+              <span className="badge badge-neutral" style={{ fontSize: "11px", padding: "3px 8px", whiteSpace: "nowrap" }}>
+                Settled
               </span>
             </div>
           );
         }
         return (
-          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
-            <span className="badge badge-urgent" style={{ fontSize: "11.5px" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
+            <span className="badge badge-urgent" style={{ fontSize: "11px", padding: "3px 8px", whiteSpace: "nowrap" }}>
               Action Needed
             </span>
           </div>
@@ -399,27 +412,29 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     },
     {
       headerName: "Action",
-      width: 155,
+      width: 135,
       sortable: false,
       filter: false,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const isSelected = params.data.id === selectedDisputeId;
         return (
-          <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
+          <div style={{ display: "flex", alignItems: "center", width: "100%", maxWidth: "100%", height: "100%", overflow: "hidden" }}>
             <button
               onClick={() => onSelectDispute(params.data!.id)}
               className={isSelected ? "btn-success" : "btn-primary"}
               style={{
-                padding: "6px 12px",
-                fontSize: "12px",
-                borderRadius: "7px",
+                padding: "5px 10px",
+                fontSize: "11.5px",
+                borderRadius: "6px",
                 width: "100%",
+                maxWidth: "115px",
                 justifyContent: "center",
+                whiteSpace: "nowrap"
               }}
             >
-              <Eye size={13} />
-              <span>{params.data.status === "RESOLVED_MERCHANT_WON" ? "View Audit" : "Inspect Packet"}</span>
+              <Eye size={12} />
+              <span>{params.data.status === "RESOLVED_MERCHANT_WON" ? "Audit" : "Inspect"}</span>
             </button>
           </div>
         );
