@@ -2,11 +2,11 @@
 @import "ag-grid-community/styles/ag-theme-quartz.css";
 
 :root {
-  --bg-primary: #0a0e17;
-  --bg-secondary: #0f172a;
-  --bg-surface: #1e293b;
-  --bg-surface-hover: #26334d;
-  --border-subtle: #334155;
+  --bg-primary: #080c14;
+  --bg-secondary: #0c1220;
+  --bg-surface: #131c31;
+  --bg-surface-hover: #1e2b48;
+  --border-subtle: #1e293b;
   --border-glow: rgba(0, 112, 186, 0.4);
   
   --pp-blue: #0070ba;
@@ -41,50 +41,82 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 15% 10%, rgba(0, 112, 186, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 45%);
+    radial-gradient(circle at 10% 5%, rgba(0, 112, 186, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.04) 0%, transparent 60%);
   background-attachment: fixed;
 }
 
 /* Glassmorphism panels */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .glass-panel:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
-/* AG Grid Dark Quartz Customizations */
+.glass-panel-glow {
+  box-shadow: 0 10px 30px -10px rgba(0, 112, 186, 0.25), 0 0 0 1px rgba(0, 112, 186, 0.2);
+}
+
+/* AG Grid Dark Quartz Customizations - High Polish */
 .ag-theme-quartz-dark {
-  --ag-background-color: #0d1527;
-  --ag-header-background-color: #0b1120;
-  --ag-odd-row-background-color: #0d1527;
-  --ag-row-hover-color: rgba(0, 112, 186, 0.15);
+  --ag-background-color: #0b1120;
+  --ag-header-background-color: #080d19;
+  --ag-odd-row-background-color: #0b1120;
+  --ag-row-hover-color: rgba(0, 112, 186, 0.12);
   --ag-selected-row-background-color: rgba(0, 112, 186, 0.22);
-  --ag-border-color: #1e293b;
+  --ag-border-color: #1a2438;
   --ag-header-foreground-color: #94a3b8;
   --ag-foreground-color: #f1f5f9;
   --ag-font-family: 'Plus Jakarta Sans', sans-serif;
   --ag-font-size: 13.5px;
   --ag-grid-size: 8px;
-  --ag-row-height: 54px;
+  --ag-row-height: 64px;
   --ag-header-height: 48px;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   border: 1px solid #1e293b;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
 }
 
 .ag-theme-quartz-dark .ag-header-cell-text {
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   font-size: 11px;
+  color: #94a3b8;
+}
+
+.ag-theme-quartz-dark .ag-row {
+  border-bottom: 1px solid rgba(30, 41, 59, 0.7);
+  transition: background-color 0.15s ease;
+}
+
+.ag-theme-quartz-dark .ag-row-hover {
+  border-left: 3px solid #0070ba;
+}
+
+/* Avatars */
+.avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 /* Custom Badges */
@@ -215,6 +247,43 @@ body {
   filter: brightness(1.1);
 }
 
+/* Interactive Matrix Card Component */
+.dispute-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dispute-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.dispute-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 12px 30px -10px rgba(0, 112, 186, 0.3);
+  background: rgba(18, 28, 51, 0.85);
+}
+
+.dispute-card:hover::before {
+  opacity: 1;
+}
+
 /* Citation chip inside narrative */
 .citation-chip {
   display: inline-flex;
@@ -256,10 +325,29 @@ body {
 
 /* Animations */
 @keyframes pulseGlow {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 0.3; }
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.9); }
 }
 
 .pulse-indicator {
   animation: pulseGlow 2s infinite ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090e18;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
 }
