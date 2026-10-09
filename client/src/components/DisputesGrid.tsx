@@ -153,8 +153,8 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
     {
       headerName: "Customer & Case ID",
       field: "buyer_name",
-      minWidth: 260,
-      flex: 1.3,
+      minWidth: 310,
+      flex: 1.6,
       cellRenderer: (params: ICellRendererParams<DisputeRow>) => {
         if (!params.data) return null;
         const initials = getInitials(params.data.buyer_name);
@@ -162,23 +162,33 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
         const isCopied = copiedId === params.data.paypal_dispute_id;
 
         return (
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", height: "100%" }}>
-            <div className="avatar-circle" style={{ background: gradient }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", width: "100%", height: "100%", overflow: "hidden" }}>
+            <div className="avatar-circle" style={{ background: gradient, width: "36px", height: "36px", flexShrink: 0 }}>
               {initials}
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "2px", minWidth: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontWeight: "700", color: "#f8fafc", fontSize: "13.5px" }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0, flex: 1, gap: "3px", overflow: "hidden" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", overflow: "hidden" }}>
+                <span style={{ fontWeight: "700", color: "#f8fafc", fontSize: "13.5px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {params.data.buyer_name}
                 </span>
-                <span style={{ fontSize: "11px", color: "#64748b", fontFamily: "'JetBrains Mono', monospace" }}>
+                <span style={{ 
+                  fontSize: "10.5px", 
+                  color: "#94a3b8", 
+                  fontFamily: "'JetBrains Mono', monospace", 
+                  background: "rgba(30, 41, 59, 0.7)", 
+                  padding: "1px 6px", 
+                  borderRadius: "4px", 
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  flexShrink: 0,
+                  fontWeight: "500" 
+                }}>
                   {params.data.order_id}
                 </span>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                <span style={{ fontSize: "11px", color: "#38bdf8", fontFamily: "'JetBrains Mono', monospace", fontWeight: "600" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px", overflow: "hidden", whiteSpace: "nowrap" }}>
+                <span style={{ fontSize: "11px", color: "#38bdf8", fontFamily: "'JetBrains Mono', monospace", fontWeight: "600", flexShrink: 0 }}>
                   {params.data.paypal_dispute_id}
                 </span>
                 <button
@@ -191,13 +201,14 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
                     padding: "2px",
                     display: "flex",
                     alignItems: "center",
+                    flexShrink: 0,
                   }}
                   title="Copy Case ID"
                 >
-                  {isCopied ? <Check size={12} /> : <Copy size={12} />}
+                  {isCopied ? <Check size={11} /> : <Copy size={11} />}
                 </button>
                 {params.data.item_title && (
-                  <span style={{ fontSize: "11px", color: "#94a3b8", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "120px" }}>
+                  <span style={{ fontSize: "11px", color: "#64748b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
                     • {params.data.item_title}
                   </span>
                 )}
@@ -671,11 +682,13 @@ export const DisputesGrid: React.FC<DisputesGridProps> = ({
 
       {/* VIEW MODE 1: AG GRID VIEW */}
       {viewMode === "table" ? (
-        <div className="ag-theme-quartz-dark" style={{ height: "420px", width: "100%" }}>
+        <div className="ag-theme-quartz-dark" style={{ height: "460px", width: "100%" }}>
           <AgGridReact<DisputeRow>
             rowData={processedData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
+            rowHeight={68}
+            headerHeight={48}
             pagination={true}
             paginationPageSize={10}
             animateRows={true}

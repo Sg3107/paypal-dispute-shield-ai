@@ -103,6 +103,21 @@ body {
   border-left: 3px solid #0070ba;
 }
 
+.ag-theme-quartz-dark .ag-cell {
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 16px !important;
+  line-height: normal !important;
+  overflow: hidden !important;
+}
+
+.ag-theme-quartz-dark .ag-cell-value {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* Avatars */
 .avatar-circle {
   width: 34px;
