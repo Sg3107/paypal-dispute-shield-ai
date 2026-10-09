@@ -1,0 +1,25 @@
+{
+  "name": "paypal-dispute-shield-ai",
+  "version": "1.0.0",
+  "description": "PayPal AI Hackathon - Dispute Evidence Autopilot & AG Grid Operations Command Center",
+  "scripts": {
+    "setup": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix server run build && npm --prefix client run build"
+  },
+  "keywords": [
+    "paypal",
+    "ai-agent",
+    "disputes",
+    "chargebacks",
+    "ag-grid",
+    "hackathon"
+  ],
+  "author": "PayPal AI Hackathon Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
