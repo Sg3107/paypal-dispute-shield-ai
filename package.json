@@ -17,7 +17,11 @@
     "ag-grid",
     "hackathon"
   ],
-  "author": "PayPal AI Hackathon Team",
+  "author": "Sg3107",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sg3107/paypal-dispute-shield-ai.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^9.1.2"

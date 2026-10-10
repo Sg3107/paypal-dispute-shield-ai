@@ -79,7 +79,7 @@ flowchart TD
 ### 2. Installation & Quick Start
 Clone the repository and launch the full stack with 2 commands:
 ```bash
-git clone https://github.com/your-username/paypal-dispute-shield-ai.git
+git clone https://github.com/Sg3107/paypal-dispute-shield-ai.git
 cd "paypal-dispute-shield-ai"
 
 # 1. Install all dependencies across root, server, and client:
@@ -124,5 +124,6 @@ GEMINI_API_KEY=your_gemini_api_key
 
 ---
 
-## 📜 License
-MIT License. Built for the PayPal AI Hackathon 2026.
+## 📜 License & Author
+MIT License © 2026 **Sg3107**. Built for the **PayPal AI Hackathon 2026**.
+Repository: [github.com/Sg3107/paypal-dispute-shield-ai](https://github.com/Sg3107/paypal-dispute-shield-ai)
