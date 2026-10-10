@@ -207,3 +207,59 @@ export async function adjudicateDisputeSandbox(disputeId: string, decision: "RES
 
   return await res.json();
 }
+
+/**
+ * Verify Webhook Signature with PayPal API
+ * POST /v1/notifications/verify-webhook-signature
+ */
+export async function verifyWebhookSignature(
+  headers: Record<string, string | string[] | undefined>,
+  rawBody: any,
+  webhookId?: string
+): Promise<{ verified: boolean; message: string }> {
+  const effectiveWebhookId = webhookId || process.env.PAYPAL_WEBHOOK_ID || "MOCK_WEBHOOK_ID";
+
+  if (!PAYPAL_CLIENT_ID || !PAYPAL_CLIENT_SECRET) {
+    return { 
+      verified: true, 
+      message: "Sandbox standalone mode: Webhook signature accepted without remote call." 
+    };
+  }
+
+  try {
+    const token = await getPayPalAccessToken();
+    const payload = {
+      auth_algo: headers["paypal-auth-algo"] as string,
+      cert_url: headers["paypal-cert-url"] as string,
+      transmission_id: headers["paypal-transmission-id"] as string,
+      transmission_sig: headers["paypal-transmission-sig"] as string,
+      transmission_time: headers["paypal-transmission-time"] as string,
+      webhook_id: effectiveWebhookId,
+      webhook_event: rawBody,
+    };
+
+    const res = await fetch(`${PAYPAL_API_BASE}/v1/notifications/verify-webhook-signature`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      const data = await res.json() as { verification_status: string };
+      return {
+        verified: data.verification_status === "SUCCESS",
+        message: `PayPal signature verification status: ${data.verification_status}`,
+      };
+    } else {
+      return { 
+        verified: false, 
+        message: `PayPal signature verification returned status ${res.status}: ${await res.text()}` 
+      };
+    }
+  } catch (err: any) {
+    return { verified: false, message: `Webhook verification failed: ${err.message}` };
+  }
+}

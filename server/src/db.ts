@@ -75,6 +75,7 @@ export function initDatabase() {
       claims_json TEXT NOT NULL,
       recommendation TEXT NOT NULL,
       status TEXT NOT NULL, -- 'DRAFTED', 'APPROVED', 'SUBMITTED', 'REJECTED'
+      citation_audit_json TEXT,
       paypal_submission_id TEXT,
       submitted_at TEXT,
       created_at TEXT NOT NULL,
@@ -90,6 +91,12 @@ export function initDatabase() {
       FOREIGN KEY (dispute_id) REFERENCES disputes(id)
     );
   `);
+
+  try {
+    db.prepare("ALTER TABLE packets ADD COLUMN citation_audit_json TEXT").run();
+  } catch {
+    // Column already exists
+  }
 
   seedInitialData();
 }

@@ -39,6 +39,26 @@ export const SimulateModal: React.FC<SimulateModalProps> = ({
       badge: "Smart Cost Settlement",
       badgeClass: "badge-settle",
     },
+    {
+      id: "UNAUTHORISED_3DS",
+      title: "Scenario C: Bose QuietComfort 45 (₹18,990)",
+      reason: "Unauthorized Transaction (Fraud Claim)",
+      carrier: "BlueDart (Delivered yesterday)",
+      expectedOutcome: "Agent Recommendation: FIGHT",
+      evExplanation: "Win probability 92%. Positive EV (+₹17,351). 3DS 2.0 liability shift & Seller Protection address match.",
+      badge: "3DS Auth Defense",
+      badgeClass: "badge-fight",
+    },
+    {
+      id: "SNAD_RETURN_POLICY",
+      title: "Scenario D: Handcrafted Leather Tote (₹4,499)",
+      reason: "Significantly Not As Described (SNAD)",
+      carrier: "Delhivery (Delivered 3 days ago)",
+      expectedOutcome: "Agent Recommendation: FIGHT",
+      evExplanation: "Win probability 84%. Positive EV (+₹3,659). Verified catalog specs & 7-day return policy condition audit.",
+      badge: "SNAD Policy Defense",
+      badgeClass: "badge-fight",
+    },
   ];
 
   return (
